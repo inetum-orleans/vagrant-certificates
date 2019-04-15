@@ -77,7 +77,7 @@ module VagrantPlugins
             unless certificate_matches?(from, to)
               tmp_to = Pathname.new(Tempfile.new('vagrant').path).basename
               @machine.ui.info(I18n.t('vagrant_ca_certificates.certificate.upload.file', from: from, to: to))
-              sh.upload(from, tmp_to) # remote.path will build a "C:\" URI on windows, cp to ~ and move.
+              sh.upload(from.to_s, tmp_to.to_s) # remote.path will build a "C:\" URI on windows, cp to ~ and move.
               case @machine.guest.name
               when :windows
                 sh.sudo("Move-Item -path #{tmp_to}/* -Destination #{to} -Force")
