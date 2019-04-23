@@ -1,5 +1,5 @@
 require 'rspec/its'
-require 'vagrant-ca-certificates'
+require 'vagrant-certificates'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|

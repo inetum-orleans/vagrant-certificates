@@ -1,5 +1,5 @@
 en:
-  vagrant_ca_certificates:
+  vagrant_certificates:
     unsupported:
       guest_system: |
         Plugin does not support guest operating system.

@@ -1,7 +1,6 @@
 # CA Certificate Plugin for Vagrant
-![Gem Version](https://img.shields.io/gem/v/vagrant-ca-certificates.svg)
-![Build Status](https://img.shields.io/travis/williambailey/vagrant-ca-certificates.svg)
-![License](https://img.shields.io/github/license/williambailey/vagrant-ca-certificates.svg)
+![Gem Version](https://img.shields.io/gem/v/vagrant-certificates.svg)
+![License](https://img.shields.io/github/license/gfi-centre-ouest/vagrant-certificates.svg)
 
 A [Vagrant][4] plugin which configures the virtual machine to inject
 the specified certificates into the guest's root bundle. This is
@@ -13,9 +12,13 @@ system's [root certificate bundle][6]. You should only use this if you
 know *exactly* what you are doing. This should *never* be used on a
 production machine.
 
+## Fork
+
+This is a fork of original [vagrant-ca-certificates](https://github.com/williambailey/vagrant-ca-certificates) plugin.
+
 ## Installation
 The latest stable version of this plugin can be installed using the
-standard `vagrant plugin install` with the `vagrant-ca-certificates`
+standard `vagrant plugin install` with the `vagrant-certificates`
 argument. If you're looking to hack on the plugin or test a
 development release you'll need to checkout the branch and build the
 gem yourself. That's pretty easy.
@@ -25,11 +28,11 @@ bundler to install all of the Ruby dependencies and finally creates
 the gem locally. Once the gem is built we use the Vagrant command-line
 tool to install it.
 ```sh
-git clone https://github.com/williambailey/vagrant-ca-certificates ~/Projects/vagrant-ca-certificates
-cd ~/Projects/vagrant-ca-certificates
+git clone https://github.com/williambailey/vagrant-certificates ~/Projects/vagrant-certificates
+cd ~/Projects/vagrant-certificates
 bundle install
 rake build
-vagrant plugin install pkg/vagrant-ca-certificates-*.gem
+vagrant plugin install pkg/vagrant-certificates-*.gem
 ```
 
 ## Using with Test Kitchen
@@ -47,9 +50,9 @@ provision a new instance.
 Vagrant.configure('2') do |config|
   config.proxy.enabled = true if Vagrant.has_plugin?('vagrant-proxyconf')
 
-  if Vagrant.has_plugin?('vagrant-ca-certificates')
-    config.ca_certificates.enabled = true
-    config.ca_certificates.certs = [
+  if Vagrant.has_plugin?('vagrant-certificates')
+    config.certificates.enabled = true
+    config.certificates.certs = [
       '/etc/pki/ca-trust/source/anchors/root.crt',
       '/etc/pki/ca-trust/source/anchors/sub.crt'
     ]
@@ -86,9 +89,9 @@ the specified certificates.
 
 ```ruby
 Vagrant.configure('2') do |config|
-  if Vagrant.has_plugin?('vagrant-ca-certificates')
-    config.ca_certificates.enabled = true
-    config.ca_certificates.certs = Dir.glob('/etc/pki/ca-trust/source/anchors/*.crt')
+  if Vagrant.has_plugin?('vagrant-certificates')
+    config.certificates.enabled = true
+    config.certificates.certs = Dir.glob('/etc/pki/ca-trust/source/anchors/*.crt')
   end
 end
 ```
@@ -109,15 +112,15 @@ This file should be saved to `$HOME/.kitchen/Vagrantfile.rb`.
 ```ruby
 # These are requirements for this base Vagrantfile. If they are not
 # installed there will be a warning message with Vagrant/test-kitchen.
-%w(vagrant-ca-certificates vagrant-proxyconf vagrant-cachier).each do |name|
+%w(vagrant-certificates vagrant-proxyconf vagrant-cachier).each do |name|
   fail "Please install the '#{name}' plugin!" unless Vagrant.has_plugin?(name)
 end
 
 Vagrant.configure('2') do |config|
   config.cache.scope = :box
   config.proxy.enabled = true
-  config.ca_certificates.enabled = true
-  config.ca_certificates.certs = Dir.glob('/etc/pki/ca-trust/source/anchors/*.crt')
+  config.certificates.enabled = true
+  config.certificates.certs = Dir.glob('/etc/pki/ca-trust/source/anchors/*.crt')
 end
 ```
 [1]: https://careers.bloomberg.com
