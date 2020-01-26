@@ -80,7 +80,7 @@ module VagrantPlugins
               sh.upload(from.to_s, tmp_to.to_s) # remote.path will build a "C:\" URI on windows, cp to ~ and move.
               case @machine.guest.name
               when :windows
-                sh.sudo("Move-Item -path #{tmp_to}/* -Destination #{to} -Force")
+                sh.sudo("Move-Item -path #{tmp_to} -Destination #{to} -Force")
               else
                 sh.sudo("mv #{tmp_to} #{to} && chown root: #{to} && chmod 0644 #{to}")
               end
